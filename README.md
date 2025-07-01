@@ -6,7 +6,7 @@
 ![Java](https://img.shields.io/badge/Java-17%2B-blue)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
 
-API REST para um fórum de discussão, desenvolvida para o Challenge Back-End da Alura + ONE. A API gerencia tópicos e utiliza autenticação segura com Tokens JWT.
+API REST para um fórum de discussão. A API gerencia tópicos e utiliza autenticação segura com Tokens JWT.
 
 ---
 ## ✨ Funcionalidades
