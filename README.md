@@ -81,6 +81,3 @@ API REST para um fórum de discussão. A API gerencia tópicos e utiliza autenti
 | `DELETE` | `/topicos/{id}`    | Apaga (logicamente) um tópico. |
 
 ---
-## 👨‍💻 Autor
-
-Desenvolvido por **[Coloque o Seu Nome Aqui]**.
