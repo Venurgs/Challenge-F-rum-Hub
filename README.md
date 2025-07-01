@@ -48,7 +48,7 @@ Clonar o repositório:
 
 Bash
 
-git clone https://github.com/seu-usuario/forum-hub.git
+git clone https://github.com/seu-usuario/f-rum-hub.git
 Configurar a Base de Dados:
 
 Cria uma base de dados no teu MySQL com o nome forumhub_db.
