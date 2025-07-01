@@ -1,155 +1,117 @@
 # Challenge-Forum-Hub
 
 🗣️ Forum Hub API
-API REST para um fórum de discussão. A API permite a gestão completa de tópicos, incluindo criação, listagem, detalhamento, atualização e exclusão, com um sistema de autenticação seguro baseado em Tokens JWT.
+API REST para um fórum de discussão, com CRUD completo de tópicos e autenticação via Token JWT.
 
-✨ Funcionalidades Principais
-Autenticação e Autorização: Sistema de segurança com Token JWT para proteger os endpoints.
-
-CRUD de Tópicos: Operações completas de CREATE, READ, UPDATE e DELETE para os tópicos do fórum.
-
-Validações: Regras de negócio para garantir a integridade dos dados (ex: não permitir tópicos duplicados).
-
-Paginação e Ordenação: A listagem de tópicos é paginada e pode ser ordenada para uma melhor performance e experiência de uso.
-
-Exclusão Lógica: Os registos não são apagados fisicamente da base de dados, apenas marcados como inativos.
-
-🛠️ Tecnologias Utilizadas
+🛠️ Tecnologias
 Java 17
 
 Spring Boot 3
 
-Spring Web: para a construção de endpoints REST.
+Spring Security & JWT
 
-Spring Security: para a implementação da segurança e autenticação.
+JPA/Hibernate
 
-Spring Data JPA: para a persistência de dados.
+Maven
 
-Maven: como gestor de dependências.
+MySQL
 
-MySQL: como base de dados relacional.
-
-Lombok: para reduzir o código boilerplate.
-
-JWT (JSON Web Token): para a geração de tokens de autenticação.
-
-⚙️ Configuração e Instalação
-Pré-requisitos:
-
-Java 17 (ou superior)
-
-Maven 3.8 (ou superior)
-
-MySQL Server
-
-Passos:
-
-Clonar o repositório:
+⚙️ Como Executar
+Clone o repositório:
 
 Bash
 
-git clone https://github.com/seu-usuario/f-rum-hub.git
-Configurar a Base de Dados:
+git clone https://github.com/seu-usuario/forum-hub.git
+Configure a Base de Dados:
 
-Cria uma base de dados no teu MySQL com o nome forumhub_db.
+Crie uma base de dados MySQL chamada forumhub_db.
 
-Abre o ficheiro src/main/resources/application.properties.
-
-Altera as seguintes propriedades com as tuas credenciais do MySQL:
+No ficheiro src/main/resources/application.properties, configure o seu utilizador e senha do MySQL:
 
 Properties
 
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
-Executar a Aplicação:
-
-Podes executar a aplicação diretamente pela tua IDE (IntelliJ) ou compilando com o Maven:
+spring.datasource.username=SEU_USUARIO_AQUI
+spring.datasource.password=SUA_SENHA_AQUI
+Execute a Aplicação:
 
 Bash
 
 mvn spring-boot:run
 A API estará disponível em http://localhost:8080.
 
-📖 Documentação da API
-Autenticação
-POST /login
-Gera um token de autenticação para um utilizador. Este token deve ser enviado no cabeçalho Authorization de todas as requisições para endpoints protegidos.
+📖 Endpoints da API
+Método
 
-Corpo da Requisição (Request Body):
+Rota
 
-JSON
+Descrição
 
-{
-    "login": "ana.silva@example.com",
-    "senha": "123456"
-}
-Resposta de Sucesso (200 OK):
+Autenticação?
 
-JSON
+Corpo (Exemplo)
 
-{
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-Tópicos
-Endpoints para a gestão de tópicos. Todos requerem autenticação.
+POST
 
-POST /topicos
+/login
+
+Obtém um token de autenticação.
+
+Não
+
+{"login": "user@email.com", "senha": "123"}
+
+GET
+
+/topicos
+
+Lista todos os tópicos ativos.
+
+Sim
+
+N/A
+
+POST
+
+/topicos
+
 Cria um novo tópico.
 
-Cabeçalho: Authorization: Bearer <seu_token_jwt>
+Sim
 
-Corpo da Requisição:
+{"titulo": "...", "mensagem": "...", ...}
 
-JSON
+GET
 
-{
-    "titulo": "Dúvida sobre a anotação @RestController",
-    "mensagem": "Qual a diferença entre @Controller e @RestController?",
-    "autor": "José",
-    "curso": "Spring Boot"
-}
-Resposta de Sucesso (201 Created): Retorna os dados do tópico recém-criado.
+/topicos/{id}
 
-GET /topicos
-Lista todos os tópicos ativos. Suporta paginação e ordenação.
+Detalha um tópico específico.
 
-Cabeçalho: Authorization: Bearer <seu_token_jwt>
+Sim
 
-Parâmetros de URL (opcionais):
+N/A
 
-size: número de itens por página (ex: ?size=5)
+PUT
 
-page: número da página (começa em 0, ex: &page=1)
+/topicos/{id}
 
-sort: campo e direção da ordenação (ex: &sort=titulo,desc)
+Atualiza um tópico.
 
-Resposta de Sucesso (200 OK): Retorna um objeto de página com a lista de tópicos.
+Sim
 
-GET /topicos/{id}
-Detalha um tópico específico pelo seu ID.
+{"titulo": "...", "mensagem": "..."} (opcional)
 
-Cabeçalho: Authorization: Bearer <seu_token_jwt>
+DELETE
 
-Resposta de Sucesso (200 OK): Retorna os dados completos do tópico.
+/topicos/{id}
 
-PUT /topicos/{id}
-Atualiza os dados de um tópico existente. Os campos no corpo são opcionais.
+Apaga (logicamente) um tópico.
 
-Cabeçalho: Authorization: Bearer <seu_token_jwt>
+Sim
 
-Corpo da Requisição:
+N/A
 
-JSON
 
-{
-    "titulo": "Título atualizado",
-    "mensagem": "Mensagem atualizada"
-}
-Resposta de Sucesso (200 OK): Retorna os dados completos do tópico atualizado.
+Exportar para as Planilhas
+(Para aceder aos endpoints que requerem autenticação, envie o token recebido no /login no cabeçalho: Authorization: Bearer <seu_token>).
 
-DELETE /topicos/{id}
-Realiza a exclusão lógica de um tópico.
 
-Cabeçalho: Authorization: Bearer <seu_token_jwt>
-
-Resposta de Sucesso (204 No Content): Não retorna conteúdo no corpo.
